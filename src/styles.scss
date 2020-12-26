@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow:hidden;
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+  font-size: 15px;
+  background-color: #efefef;
+  color: rgba(0,0,0,0.87);
+}

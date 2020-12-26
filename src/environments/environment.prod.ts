@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  serverUrl: 'ws://tranquil-forest-37528.herokuapp.com'
 };

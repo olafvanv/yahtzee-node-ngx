@@ -1,0 +1,34 @@
+.game-wrapper {
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .title {
+    text-align: center;
+  }
+
+  .start-button {
+    padding: 16px 32px;
+    font-size:1.2em;
+    border: 0;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+
+    &:hover {
+      background-color:rgba(0,0,0,0.8);
+    }
+  }
+
+  .conn-info {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    font-size: 0.8em;
+  }
+}

@@ -1,0 +1,22 @@
+<div class="scoresheet-container">
+  <div class="upper-section">
+    <div *ngFor="let section of scoresheet.upperSection" [class]="section.class" class="section-row">
+      <span class="name">{{section.name}}</span>
+      <span class="value" (click)="setScore(section)"
+        [ngClass]="{'locked': section.locked}">{{section.calculate()}}</span>
+    </div>
+  </div>
+  <div class="lower-section">
+    <div *ngFor="let section of scoresheet.lowerSection" [class]="section.class" class="section-row">
+      <span class="name">{{section.name}}</span>
+      <span class="value" (click)="setScore(section)" *ngIf="section.name !== 'Yahtzee'"
+        [ngClass]="{'locked': section.locked}">{{section.calculate()}}</span>
+
+      <div class="value" (click)="setScore(section)" *ngIf="section.name === 'Yahtzee'"
+        [ngClass]="{'locked': section.locked}">
+        <span *ngIf="section.extra > 0">{{section.calculate()}} + {{section.extra * 100}}</span>
+        <span *ngIf="section.extra === 0">{{section.calculate()}}</span>
+      </div>
+    </div>
+  </div>
+</div>

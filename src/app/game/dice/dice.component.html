@@ -1,0 +1,14 @@
+<div class="dice-container">
+  <div class="dice">
+    <div class="die-wrapper" *ngFor="let die of dice">
+      <div class="die" (click)="throwsLeft === 3 ? null : die.toggleLock()">
+        <span class="dot" *ngFor="let dot of [].constructor(die.value)"></span>
+      </div>
+      <button class="lock-button" (click)="die.toggleLock()" [disabled]="throwsLeft === 3">
+        <span *ngIf="!die.locked">Lock</span>
+        <span *ngIf="die.locked">Locked</span>
+      </button>
+    </div>
+  </div>
+  <button class="roll-button" (click)="rollDice()" [disabled]="disableRoll">Roll</button>
+</div>

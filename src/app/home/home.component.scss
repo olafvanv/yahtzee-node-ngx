@@ -1,0 +1,70 @@
+.home-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: radial-gradient(#f5685b, #ec3a2b);
+  color: #fff;
+  position: relative;
+
+  .title {
+    font-size: 6em;
+    text-align: center;
+    -webkit-text-stroke: .03em #333;
+    margin: 0;
+  }
+
+  .logo {
+    margin: 80px 0;
+    height: 150px;
+  }
+
+  .play-button {
+    padding: 16px 32px;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    color: #fff;
+    font-size:2em;
+    font-weight: 500;
+    position: relative;
+    outline: none;
+
+    &::after, &::before {
+      content: "";
+      width: 10px;
+      height: 3px;
+      background-color: #fff;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      transition-duration: .3s;
+    }
+    &::before {
+      left: 0;
+    }
+    &::after {
+      right: 0;
+    }
+
+    &:hover {
+      &::before {
+        left: 10px;
+      }
+      &::after {
+        right: 10px;
+      }
+    }
+    &:active {
+      &::before {
+        left: -800px;
+      }
+      &::after {
+        right: -800px;
+      }
+    }
+  }
+}
