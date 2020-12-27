@@ -305,9 +305,11 @@ export class ScoresheetComponent implements OnInit {
     ) {
       this.calculateTotalScore();
     } else {
-      this.gameService.yourTurn = false;
+      if(this.multi) {
+        this.gameService.yourTurn = false;
+        this.sockets.emit('end-turn');
+      }
       this.gameService.endTurn();
-      this.sockets.emit('end-turn');
     }
   }
 

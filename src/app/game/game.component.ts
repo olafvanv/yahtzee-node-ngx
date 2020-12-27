@@ -20,7 +20,11 @@ export class GameComponent implements OnInit, OnDestroy {
     private gameService: GameService
   ) {
 
-    if(this.gameService.mode === 'multi') this.connectToSocket();
+    if(this.gameService.mode === 'multi') {
+      this.connectToSocket();
+    } else {
+      this.gameService.yourTurn = true;
+    }
   }
 
   ngOnInit(): void {}
