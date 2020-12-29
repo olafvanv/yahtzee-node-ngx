@@ -1,10 +1,12 @@
 <div class="game-wrapper">
-  <ng-container *ngIf="gameStarted || !multi">
+  <ng-container *ngIf="(gameStarted || !multi) && !result">
     <h1>{{turn}}</h1>
-    <app-scoresheet [dice]="dice"></app-scoresheet>
-    <app-dice (result)="setDice($event)"></app-dice>
+    <div class="game">
+      <app-scoresheet [dice]="dice"></app-scoresheet>
+      <app-dice (result)="setDice($event)"></app-dice>
+    </div>
   </ng-container>
-  <ng-container *ngIf="!gameStarted && multi">
+  <ng-container *ngIf="(!gameStarted && multi) && !result">
     <h1 class="title">Yahtzee</h1>
     <p>Press the start button to start the game</p>
     <button class="start-button" (click)="startGame()">
@@ -13,6 +15,14 @@
   </ng-container>
 
   <div class="conn-info" *ngIf="multi">
-    <span>Total players connected: {{totalPlayers}}</span>
+    <span>Total players connected: {{totalPlayers | json}}</span>
+  </div>
+
+  <div class="result" *ngIf="result">
+    <h1 *ngIf="result.winner">You won!</h1>
+    <h1 *ngIf="!result.winner"> You did not win :(</h1>
+
+    <h1>Total score: {{endScore}}</h1>
+    <h4 *ngIf="!result.winner">The winner had {{highestScore}} points</h4>
   </div>
 </div>

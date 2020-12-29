@@ -11,8 +11,6 @@ import { SocketService } from 'src/app/services/socket.service';
 export class ScoresheetComponent implements OnInit {
   @Input() dice: number[] = [];
 
-  multi: boolean = false;
-
   scoresheet: IScoresheet;
   upperSection: IScoresheetRow[] = [
     {
@@ -280,6 +278,10 @@ export class ScoresheetComponent implements OnInit {
     });
   }
 
+  get multi(): boolean {
+    return this.gameService.mode === 'multi';
+  }
+
   /**
    * Select the score and lock the selected row
    * @param score
@@ -319,7 +321,8 @@ export class ScoresheetComponent implements OnInit {
     const extraYahtzees = this.lowerSection.find(f => f.name === "Yahtzee").extra;
     const total: number = totalUpper.calculate() + totalLower.calculate() + (100 * extraYahtzees);
 
-    alert('Total points: ' + total + '!!');
+    this.sockets.emit('end-game', total);
+    this.gameService.endScore = total;
   }
 }
 

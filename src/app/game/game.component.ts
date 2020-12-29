@@ -15,6 +15,8 @@ export class GameComponent implements OnInit, OnDestroy {
   totalPlayers: number = 0;
   multi: boolean = false;
 
+  result: {winner: boolean, totals: number[]} = null;
+
   constructor(
     private sockets: SocketService,
     private gameService: GameService
@@ -41,6 +43,14 @@ export class GameComponent implements OnInit, OnDestroy {
     return this.gameService.yourTurn ? 'Your turn' : 'Not your turn';
   }
 
+  get endScore(): number {
+    return this.gameService.endScore;
+  }
+
+  get highestScore(): number {
+    return Math.max(...this.result.totals);
+  }
+
   connectToSocket() {
     this.multi = true;
     // Connect to socket.io
@@ -59,10 +69,13 @@ export class GameComponent implements OnInit, OnDestroy {
       this.gameService.gameStarted = true;
     });
     this.sockets.listen('your-turn').subscribe(() => {
-      console.log('Your turn');
       this.gameService.turnEnded.next();
       this.gameService.yourTurn = true;
     });
+    this.sockets.listen('end-game').subscribe((result) => {
+      this.gameService.gameFinished = true;
+      this.result = result;
+    })
   }
 
   startGame() {
