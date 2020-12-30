@@ -1,3 +1,5 @@
+@import '../../assets/scss/variables';
+
 .game-wrapper {
   height: 100%;
   overflow: auto;
@@ -30,6 +32,11 @@
     color: rgba(0,0,0,0.87);
   }
 
+  .game {
+    display: flex;
+    flex-direction: column;
+  }
+
   .conn-info {
     position: absolute;
     right: 8px;
@@ -39,5 +46,12 @@
 
   .result {
     text-align: center;
+  }
+
+  @media only screen and(max-width: $breakpoint-mobile) {
+
+    .game {
+      flex-direction: column-reverse;
+    }
   }
 }

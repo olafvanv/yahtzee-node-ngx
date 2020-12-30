@@ -1,5 +1,6 @@
 <div class="scoresheet-container">
   <div class="upper-section">
+    <div class="section-title">Upper Section</div>
     <div *ngFor="let section of scoresheet.upperSection" [class]="section.class" class="section-row">
       <span class="name">{{section.name}}</span>
       <span class="value" (click)="setScore(section)"
@@ -7,6 +8,7 @@
     </div>
   </div>
   <div class="lower-section">
+    <div class="section-title">Lower Section</div>
     <div *ngFor="let section of scoresheet.lowerSection" [class]="section.class" class="section-row">
       <span class="name">{{section.name}}</span>
       <span class="value" (click)="setScore(section)" *ngIf="section.name !== 'Yahtzee'"

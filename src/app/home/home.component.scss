@@ -1,3 +1,5 @@
+@import '../../assets/scss/variables';
+
 .home-container {
   height: 100%;
   width: 100%;
@@ -14,6 +16,9 @@
     text-align: center;
     -webkit-text-stroke: .03em #333;
     margin: 0;
+    @media only screen and (max-width: $breakpoint-mobile) {
+      font-size: 5em;
+    }
   }
 
   .logo {
@@ -68,3 +73,4 @@
     }
   }
 }
+

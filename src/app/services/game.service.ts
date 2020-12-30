@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class GameService {
-  public mode: string = 'multi';
+  public mode: string = 'single';
   public yourTurn: boolean = false;
   public gameStarted: boolean = false;
   public endScore: number = null;

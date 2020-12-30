@@ -1,6 +1,8 @@
+@import '../../../assets/scss/variables';
+
 .scoresheet-container {
   width: 100%;
-  width: 700px;
+  max-width: 700px;
   display: flex;
   margin: 20px auto;
   border: 1px solid #e0e0e0;
@@ -11,9 +13,14 @@
     width: 50%;
     margin: 16px;
 
+    .section-title {
+      padding: 0 0 8px;
+      color: rgba(0,0,0,0.43);
+    }
+
     .section-row {
       display: flex;
-      padding: 4px 0 4px 8px;
+      padding: 4px 0;
       border-bottom: 1px solid #e0e0e0;
       box-sizing: border-box;
       align-items:center;
@@ -59,6 +66,28 @@
           cursor: default;
           background-color: #e0e0e0;
         }
+      }
+    }
+  }
+
+  @media only screen and(max-width: $breakpoint-mobile) {
+
+    flex-direction: column;
+    padding: 0 8px;
+    border: 0;
+    background-color: transparent;
+
+    .upper-section, .lower-section {
+      background-color: #fff;
+      width:100%;
+      margin: 0;
+      margin-bottom: 8px;
+      border: 1px solid #e0e0e0;
+      .section-title {
+        padding: 16px 8px 8px;
+      }
+      .section-row {
+        padding: 8px;
       }
     }
   }

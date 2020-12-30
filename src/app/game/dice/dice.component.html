@@ -1,6 +1,6 @@
 <div class="dice-container">
   <div class="dice">
-    <div class="die-wrapper" *ngFor="let die of dice">
+    <div class="die-wrapper" *ngFor="let die of dice" [ngClass]="{'locked': die.locked}">
       <div class="die" (click)="throwsLeft === 3 ? null : die.toggleLock()">
         <span class="dot" *ngFor="let dot of [].constructor(die.value)"></span>
       </div>
