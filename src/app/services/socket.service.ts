@@ -13,6 +13,7 @@ export class SocketService {
   constructor() {}
 
   listen(event: string): Observable<any> {
+    console.log(event);
     return new Observable((o) => {
       this.socket.on(event, (res: any) => o.next(res));
     });

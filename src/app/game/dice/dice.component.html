@@ -12,3 +12,7 @@
   </div>
   <button class="roll-button" (click)="rollDice()" [disabled]="disableRoll">Roll</button>
 </div>
+
+<audio #diceSound>
+  <source src="../../../assets/sounds/dice-throw.mp3" type="audio/mp3">
+</audio>

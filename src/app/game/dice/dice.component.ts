@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Die } from 'src/app/models/die';
 import { SocketService } from 'src/app/services/socket.service';
 import * as _ from 'lodash';
@@ -13,10 +13,13 @@ import { Subscription } from 'rxjs';
 export class DiceComponent implements OnInit, OnDestroy {
   @Output() result: EventEmitter<number[]> = new EventEmitter();
 
+  @ViewChild('diceSound') diceSound: ElementRef;
+
   throwsLeft: number = 3;
   dice: Die[] = [new Die(), new Die(), new Die(), new Die(), new Die()];
   multi: boolean = true;
   subs: Subscription = new Subscription();
+  rolling: boolean = false;
 
   constructor(
     private sockets: SocketService,
@@ -31,14 +34,15 @@ export class DiceComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Listen to other players throws
-    this.sockets.listen('dice-throw').subscribe((d) => {
-      console.log('listen to dice throws', d);
-      this.setDice(d);
-    });
+    if(this.multi) {
+      this.sockets.listen('dice-throw').subscribe((d) => {
+        this.setDice(d);
+      });
 
-    this.sockets.listen('next-turn').subscribe(() => {
-      this.resetDice();
-    });
+      this.sockets.listen('next-turn').subscribe(() => {
+        this.resetDice();
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -46,11 +50,12 @@ export class DiceComponent implements OnInit, OnDestroy {
   }
 
   get disableRoll(): boolean {
-    return !this.gameService.yourTurn || this.throwsLeft === 0;
+    return !this.gameService.yourTurn || this.throwsLeft === 0 || this.rolling;
   }
 
   rollDice(): void {
-    if(this.throwsLeft === 0) return;
+    if(this.throwsLeft === 0 || this.rolling) return;
+    this.rolling = true;
 
     // 'Animate' rolling dice
     const interval = setInterval(() => {
@@ -59,7 +64,9 @@ export class DiceComponent implements OnInit, OnDestroy {
 
     // Cancel the animation after 600ms
     setTimeout(() => {
+      this.diceSound.nativeElement.play();
       clearInterval(interval);
+      this.rolling = false;
 
       // Pass the result to the parent game component and substract remaining moves
       this.result.next(this.dice.map((d) => d.value));

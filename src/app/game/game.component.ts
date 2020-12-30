@@ -14,7 +14,6 @@ export class GameComponent implements OnInit, OnDestroy {
 
   dice: number[] = [];
   totalPlayers: number = 0;
-  multi: boolean = false;
 
   result: Result = null;
 
@@ -24,7 +23,7 @@ export class GameComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
 
-    if(this.gameService.mode === 'multi') {
+    if(this.multi) {
       this.connectToSocket();
     } else {
       this.gameService.yourTurn = true;
@@ -45,6 +44,10 @@ export class GameComponent implements OnInit, OnDestroy {
     return this.gameService.yourTurn ? 'Your turn' : 'Not your turn';
   }
 
+  get multi(): boolean {
+    return this.gameService.mode === 'multi';
+  }
+
   get endScore(): number {
     return this.gameService.endScore;
   }
@@ -54,7 +57,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   connectToSocket() {
-    this.multi = true;
     // Connect to socket.io
     this.sockets.connect();
 

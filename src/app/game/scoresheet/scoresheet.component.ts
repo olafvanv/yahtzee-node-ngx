@@ -273,9 +273,11 @@ export class ScoresheetComponent implements OnInit {
       lowerSection: this.lowerSection
     };
 
-    this.sockets.listen('game-over').subscribe(() => {
-      this.calculateTotalScore();
-    });
+    if(this.multi) {
+      this.sockets.listen('game-over').subscribe(() => {
+        this.calculateTotalScore();
+      });
+    }
   }
 
   get multi(): boolean {
@@ -321,7 +323,7 @@ export class ScoresheetComponent implements OnInit {
     const extraYahtzees = this.lowerSection.find(f => f.name === "Yahtzee").extra;
     const total: number = totalUpper.calculate() + totalLower.calculate() + (100 * extraYahtzees);
 
-    this.sockets.emit('end-game', total);
+    if(this.multi) this.sockets.emit('end-game', total);
     this.gameService.endScore = total;
   }
 }

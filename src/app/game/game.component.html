@@ -19,11 +19,11 @@
   </div>
 
   <div class="result" *ngIf="result">
-    <h1 *ngIf="result.winner">You won!</h1>
-    <h1 *ngIf="!result.winner"> You did not win :(</h1>
+    <h1 *ngIf="multi &&result.winner">You won!</h1>
+    <h1 *ngIf="multi && !result.winner"> You did not win :(</h1>
 
     <h1>Total score: {{endScore}}</h1>
-    <h4 *ngIf="!result.winner">The winner had {{highestScore}} points</h4>
+    <h4 *ngIf="multi && !result.winner ">The winner had {{highestScore}} points</h4>
 
     <button class="raised-button" (click)="playAgain()">Play again</button>
     <button class="flat-button" (click)="goToHome()">Return to Home</button>
