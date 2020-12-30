@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { GameService } from '../services/game.service';
 import { SocketService } from '../services/socket.service';
 import { DiceComponent } from './dice/dice.component';
@@ -15,11 +16,12 @@ export class GameComponent implements OnInit, OnDestroy {
   totalPlayers: number = 0;
   multi: boolean = false;
 
-  result: {winner: boolean, totals: number[]} = null;
+  result: Result = null;
 
   constructor(
     private sockets: SocketService,
-    private gameService: GameService
+    private gameService: GameService,
+    private router: Router
   ) {
 
     if(this.gameService.mode === 'multi') {
@@ -67,13 +69,13 @@ export class GameComponent implements OnInit, OnDestroy {
     // Listen to game events
     this.sockets.listen('start-game').subscribe(() => {
       this.gameService.gameStarted = true;
+      this.gameService.endScore = 0;
     });
     this.sockets.listen('your-turn').subscribe(() => {
       this.gameService.turnEnded.next();
       this.gameService.yourTurn = true;
     });
     this.sockets.listen('end-game').subscribe((result) => {
-      this.gameService.gameFinished = true;
       this.result = result;
     })
   }
@@ -85,4 +87,19 @@ export class GameComponent implements OnInit, OnDestroy {
   setDice(data: number[]): void {
     this.dice = data;
   }
+
+  playAgain() {
+    this.dice = [];
+    this.result = null;
+    this.startGame();
+  }
+
+  goToHome() {
+    this.router.navigateByUrl('/home');
+  }
+}
+
+interface Result {
+  winner: boolean,
+  totals: number[]
 }

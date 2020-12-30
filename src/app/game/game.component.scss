@@ -10,18 +10,24 @@
     text-align: center;
   }
 
-  .start-button {
+  .raised-button, .flat-button {
     padding: 16px 32px;
     font-size:1.2em;
     border: 0;
-    background-color: #000;
-    color: #fff;
     cursor: pointer;
     outline: none;
+  }
 
+  .raised-button {
+    background-color: #000;
+    color: #fff;
     &:hover {
       background-color:rgba(0,0,0,0.8);
     }
+  }
+  .flat-button {
+    background-color:transparent;
+    color: rgba(0,0,0,0.87);
   }
 
   .conn-info {

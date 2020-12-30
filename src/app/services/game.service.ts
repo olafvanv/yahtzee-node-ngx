@@ -9,7 +9,6 @@ export class GameService {
   public yourTurn: boolean = false;
   public gameStarted: boolean = false;
   public endScore: number = null;
-  public gameFinished: boolean = false;
 
   public turnEnded: EventEmitter<any> = new EventEmitter();
 

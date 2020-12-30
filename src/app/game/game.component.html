@@ -9,7 +9,7 @@
   <ng-container *ngIf="(!gameStarted && multi) && !result">
     <h1 class="title">Yahtzee</h1>
     <p>Press the start button to start the game</p>
-    <button class="start-button" (click)="startGame()">
+    <button class="raised-button" (click)="startGame()">
       Start game
     </button>
   </ng-container>
@@ -24,5 +24,8 @@
 
     <h1>Total score: {{endScore}}</h1>
     <h4 *ngIf="!result.winner">The winner had {{highestScore}} points</h4>
+
+    <button class="raised-button" (click)="playAgain()">Play again</button>
+    <button class="flat-button" (click)="goToHome()">Return to Home</button>
   </div>
 </div>
