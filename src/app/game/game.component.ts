@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { GameService } from '../services/game.service';
 import { SocketService } from '../services/socket.service';
-import { DiceComponent } from './dice/dice.component';
 
 @Component({
   selector: 'app-game',
@@ -10,12 +10,14 @@ import { DiceComponent } from './dice/dice.component';
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit, OnDestroy {
-  @ViewChild(DiceComponent) diceComponent: DiceComponent;
+  @ViewChild('gameContainer') gameContainer: ElementRef;
+
 
   dice: number[] = [];
   totalPlayers: number = 0;
 
   result: Result = null;
+  subs: Subscription = new Subscription();
 
   constructor(
     private sockets: SocketService,
@@ -30,10 +32,17 @@ export class GameComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subs.add(
+      this.gameService.turnEnded.subscribe(() => {
+        this.gameContainer.nativeElement.scrollTo(0, 0);
+      })
+    );
+  }
 
   ngOnDestroy(): void {
     if(this.multi) this.sockets.disconnect();
+    this.subs.unsubscribe();
   }
 
   get gameStarted(): boolean {
@@ -79,7 +88,9 @@ export class GameComponent implements OnInit, OnDestroy {
     });
     this.sockets.listen('end-game').subscribe((result) => {
       this.result = result;
-    })
+    });
+
+
   }
 
   startGame() {
